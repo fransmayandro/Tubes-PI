@@ -21,8 +21,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/company', [CompanyController::class, 'index']);
+Route::get('/company', [CompanyController::class, 'getcompany']);
 
-Route::get('/job', [JobController::class, 'index']);
+Route::get('/company/{id}', [CompanyController::class, 'getacompany']);
 
-Route::get('/jobsaved', [JobsavedController::class, 'index']);
+Route::get('/job', [JobController::class, 'getjob']);
+
+Route::get('/job/{id}', [JobController::class, 'getajob']);
+
+Route::get('/jobsaved', [JobsavedController::class, 'getjobsaved']);
+
+Route::get('/jobsaved/{id}', [JobsavedController::class, 'getajobsaved']);
