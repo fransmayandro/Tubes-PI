@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobsavedController;
+use App\Http\Controllers\ApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,7 @@ Route::get('/job/{id}', [JobController::class, 'getajob']);
 Route::get('/jobsaved', [JobsavedController::class, 'getjobsaved']);
 
 Route::get('/jobsaved/{id}', [JobsavedController::class, 'getajobsaved']);
+
+Route::get('/application', [ApplicationController::class, 'getapplication']);
+
+Route::get('/application/{id}', [ApplicationController::class, 'getaapplication']);
