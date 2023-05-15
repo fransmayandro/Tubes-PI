@@ -6,6 +6,8 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobsavedController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\AuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,22 +20,36 @@ use App\Http\Controllers\ApplicationController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/company', [CompanyController::class, 'getcompany']);
+
+    Route::get('/company/{id}', [CompanyController::class, 'getacompany']);
+
+    Route::get('/company/{name}/search', [CompanyController::class, 'searchcompany']);
+
+    Route::get('/job', [JobController::class, 'getjob']);
+
+    Route::get('/job/{id}', [JobController::class, 'getajob']);
+
+    Route::get('/job/{name}/search', [JobController::class, 'searchjob']);
+
+    Route::get('/jobsaved', [JobsavedController::class, 'getjobsaved']);
+
+    Route::get('/jobsaved/{id}', [JobsavedController::class, 'getajobsaved']);
+
+    Route::get('/jobsaved/{name}/search', [JobsavedController::class, 'searchjobsaved']);
+
+    Route::get('/application', [ApplicationController::class, 'getapplication']);
+
+    Route::get('/application/{id}', [ApplicationController::class, 'getaapplication']);
+
+    Route::get('/application/{name}/search', [ApplicationController::class, 'searchapplication']);
+
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-Route::get('/company', [CompanyController::class, 'getcompany']);
+Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/company/{id}', [CompanyController::class, 'getacompany']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/job', [JobController::class, 'getjob']);
 
-Route::get('/job/{id}', [JobController::class, 'getajob']);
-
-Route::get('/jobsaved', [JobsavedController::class, 'getjobsaved']);
-
-Route::get('/jobsaved/{id}', [JobsavedController::class, 'getajobsaved']);
-
-Route::get('/application', [ApplicationController::class, 'getapplication']);
-
-Route::get('/application/{id}', [ApplicationController::class, 'getaapplication']);

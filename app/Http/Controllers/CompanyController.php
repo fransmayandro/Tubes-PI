@@ -19,6 +19,11 @@ class CompanyController extends Controller
     {
         return DB::table('companies')->where('company_id',$id)->get();
     }
+
+    public function searchcompany(string $name)
+    {
+        return DB::table('companies')->where('company_name', 'like', '%'.$name.'%')->get();
+    }
     /**
      * Store a newly created resource in storage.
      */

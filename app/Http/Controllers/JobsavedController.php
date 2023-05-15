@@ -12,20 +12,30 @@ class JobsavedController extends Controller
      */
     public function getjobsaved()
     {
-        return Jobsaved::join('tbl_users', 'saved_jobs.user_id', '=', 'tbl_users.user_id')
+        return Jobsaved::join('users', 'saved_jobs.user_id', '=', 'users.id')
         ->join('job_lists', 'saved_jobs.job_id', '=', 'job_lists.job_id')
         ->join('companies', 'job_lists.company_id', '=', 'companies.company_id')
-        ->select('saved_id', 'username', 'email', 'job_title', 'company_name', 'company_location', 'company_website')
+        ->select('saved_id', 'name', 'email', 'job_title', 'company_name', 'company_location', 'company_website')
         ->get();
     }
 
     public function getajobsaved(string $id)
     {
         return DB::table('saved_jobs')->where('saved_id',$id)
-        ->join('tbl_users', 'saved_jobs.user_id', '=', 'tbl_users.user_id')
+        ->join('users', 'saved_jobs.user_id', '=', 'users.id')
         ->join('job_lists', 'saved_jobs.job_id', '=', 'job_lists.job_id')
         ->join('companies', 'job_lists.company_id', '=', 'companies.company_id')
-        ->select('saved_id', 'username', 'email', 'job_title', 'company_name', 'company_location', 'company_website')
+        ->select('saved_id', 'name', 'email', 'job_title', 'company_name', 'company_location', 'company_website')
+        ->get();
+    }
+
+    public function searchjobsaved(string $name)
+    {
+        return DB::table('saved_jobs')->where('job_title', 'like', '%'.$name.'%')
+        ->join('users', 'saved_jobs.user_id', '=', 'users.id')
+        ->join('job_lists', 'saved_jobs.job_id', '=', 'job_lists.job_id')
+        ->join('companies', 'job_lists.company_id', '=', 'companies.company_id')
+        ->select('saved_id', 'name', 'email', 'job_title', 'company_name', 'company_location', 'company_website')
         ->get();
     }
     /**

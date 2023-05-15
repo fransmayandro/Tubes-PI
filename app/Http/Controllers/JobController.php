@@ -28,6 +28,13 @@ class JobController extends Controller
                 'salary_range', 'requirements')
         ->get();
     }
+
+    public function searchjob(string $name)
+    {
+        return DB::table('job_lists')->where('job_title', 'like', '%'.$name.'%')
+        
+        ->get();
+    }
     /**
      * Store a newly created resource in storage.
      */
