@@ -12,17 +12,29 @@ class CompanyController extends Controller
      */
     public function getcompany()
     {
-        return Company::all();
+        $company = Company::all();
+        if ($company->isEmpty()) {
+            return response()->json(['message' => "Data tidak ditemukan"], 404);
+        }
+        return $company;
     }
 
     public function getacompany(string $id)
     {
-        return DB::table('companies')->where('company_id',$id)->get();
+        $company = DB::table('companies')->where('company_id',$id)->get();
+        if ($company->isEmpty()) {
+            return response()->json(['message' => "Data tidak ditemukan"], 404);
+        }
+        return $company;
     }
 
     public function searchcompany(string $name)
     {
-        return DB::table('companies')->where('company_name', 'like', '%'.$name.'%')->get();
+        $company = DB::table('companies')->where('company_name', 'like', '%'.$name.'%')->get();
+        if ($company->isEmpty()) {
+            return response()->json(['message' => "Data tidak ditemukan"], 404);
+        }
+        return $company;
     }
     /**
      * Store a newly created resource in storage.

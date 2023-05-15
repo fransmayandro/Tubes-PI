@@ -12,28 +12,39 @@ class JobController extends Controller
      */
     public function getjob()
     {
-        return Job::join('job_type', 'job_lists.job_type_id', '=', 'job_type.job_type_id')
+        $job = Job::join('job_type', 'job_lists.job_type_id', '=', 'job_type.job_type_id')
         ->join('companies', 'job_lists.company_id', '=', 'companies.company_id')
         ->select('job_id', 'job_type', 'job_title', 'job_description', 'company_name', 'company_description', 'company_location', 'company_website', 
                 'salary_range', 'requirements')
         ->get();
+        if ($job->isEmpty()) {
+            return response()->json(['message' => "Data tidak ditemukan"], 404);
+        }
+        return $job;
     }
 
     public function getajob(string $id)
     {
-        return DB::table('job_lists')->where('job_id',$id)
+        $job = DB::table('job_lists')->where('job_id',$id)
         ->join('job_type', 'job_lists.job_type_id', '=', 'job_type.job_type_id')
         ->join('companies', 'job_lists.company_id', '=', 'companies.company_id')
         ->select('job_id', 'job_type', 'job_title', 'job_description', 'company_name', 'company_description', 'company_location', 'company_website', 
                 'salary_range', 'requirements')
         ->get();
+        if ($job->isEmpty()) {
+            return response()->json(['message' => "Data tidak ditemukan"], 404);
+        }
+        return $job;
     }
 
     public function searchjob(string $name)
     {
-        return DB::table('job_lists')->where('job_title', 'like', '%'.$name.'%')
-        
+        $job = DB::table('job_lists')->where('job_title', 'like', '%'.$name.'%')
         ->get();
+        if ($job->isEmpty()) {
+            return response()->json(['message' => "Data tidak ditemukan"], 404);
+        }
+        return $job;
     }
     /**
      * Store a newly created resource in storage.
