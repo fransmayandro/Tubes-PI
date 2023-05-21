@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/login.css">
     <title>Login - Aplikasi Mencari Kerja</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container"><br>
+    <div class="container" style="padding-top: 100px">
         <div class="col-md-4 col-md-offset-4">
-            <h2 class="text-center"><b>INDEED</b><br>Aplikasi Mencari Kerja</h3>
+            <h2 class="text-center"><b>JOBSTORAGE</b><br>Aplikasi Mencari Kerja</h3>
             <hr>
             @if(session('error'))
             <div class="alert alert-danger">
                 <b>Opps!</b> {{session('error')}}
             </div>
             @endif
-            <form action="{{ route('actionlogin') }}" method="post">
+            <form action="#" method="post">
             @csrf
                 <div class="form-group">
                     <label>Email</label>

@@ -16,8 +16,8 @@
         </div>
     <nav>
         <ul>
-			<li><a href="/job">Find Jobs</a></li>
-			<li><a href="/company">Company Reviews</a></li>
+			<li><a href="#insert">Find Jobs</a></li>
+			<li><a href="#finished">Company Reviews</a></li>
         </ul>
       </nav>
     </header>
