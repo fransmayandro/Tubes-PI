@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,7 @@ Route::get('/master', function () {
 Route::get('/welcome', function () {
     return view('welcome');
 });
+Route::get('/register',[RegisUserController::class,'index'])->name('register');
+Route::post('/proses',[RegisUserController::class,'actionregister'])->name('proses');
+// $route['register'] = 'Register/index';
+// $route['register/process'] = 'Register/process';
