@@ -4,37 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register User</title>
+    <title>Daftar Akun</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <div class="container"><br>
-        <div class="col-md-6 col-md-offset-3">
-            <h2 class="text-center">FORM REGISTER</h3>
-            <hr>
-            @if(session('message'))
-            <div class="alert alert-success">
-                {{session('message')}}
+    <div class="container" style="padding-top: 100px"><br>
+        <div class="col-md-4 col-md-offset-4">
+            <h2 class="text-center"><b>JobStorage</b><br>Website Pencarian Kerja</h3>
+            @if(Session::has('success'))
+            <div class="alert alert-success" role="alert">
+                {{ Session::get('success') }}
             </div>
             @endif
-            <form action="{{route('proses')}}" method="post">
+            <form action="{{route('register')}}" method="post">
             @csrf
                 <div class="form-group">
-                    <label><i class="fa fa-envelope"></i> Email</label>
+                    <label>Email</label>
                     <input type="email" name="email" class="form-control" placeholder="Email" required="">
                 </div>
                 <div class="form-group">
-                    <label><i class="fa fa-user"></i> nama</label>
-                    <input type="text" name="name" class="form-control" placeholder="name" required="">
+                    <label>Nama</label>
+                    <input type="text" name="name" class="form-control" placeholder="Nama" required="">
                 </div>
                 <div class="form-group">
-                    <label><i class="fa fa-key"></i> Password</label>
+                    <label>Password</label>
                     <input type="password" name="password" class="form-control" placeholder="Password" required="">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-user"></i> Register</button>
-                <hr>
-                <p class="text-center">Sudah punya akun silahkan <a href="#">Login Disini!</a></p>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Daftar</button>
+                </div>
+                <p class="text-center">Sudah punya akun silahkan <a href="/login">Login Disini</a></p>
             </form>
         </div>
     </div>

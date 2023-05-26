@@ -2,72 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\TabelUSer;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function register(Request $request) {
-        $fields = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed'
-        ]);
-
-        $user = User::create([
-            'name' => $fields['name'],
-            'email' => $fields['email'],
-            'password' => bcrypt($fields['password'])
-        ]);
-
-
-        $token = $user->createToken('myapptoken')->plainTextToken;
-
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response($response, 201);
+    public function register()
+    {
+        return view('register');
     }
 
-    public function login(Request $request) {
-        $fields = $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string'
-        ]);
+    public function registerPost(Request $request)
+    {
+        $user =new User();
 
-        // Check email
-        $user = User::where('email', $fields['email'])->first();
-        
-        // Check password
-        if(!$user || !Hash::check($fields['password'], $user->password)) {
-            return response([
-                'message' => 'Bad creds'
-            ], 401);
-        }
+        $user->email = $request->email;
+        $user->name = $request->name;
+        $user->password = Hash::make($request->name);
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $user->save();
 
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
-
-        return response($response, 201);
+        return back()->with('success', 'Register berhasil');
     }
 
-    public function logout(Request $request) {
-        auth()->user()->tokens()->delete();
-        
-        return [
-            'message' => 'Logged out'
-        ];
+    public function login()
+    {
+        return view('login');
     } 
 
+    public function loginPost(Request $request)
+    {
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+
+        if (Auth::attempt($credentials)) {
+            return redirect('/home')->with('success', 'Login berhasil');
+        }
+        return back()->with('error', 'Email atau Password Salah');
+    }
 }

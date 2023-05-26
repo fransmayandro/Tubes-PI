@@ -12,9 +12,8 @@ class JobController extends Controller
      */
     public function getjob()
     {
-        $job = Job::join('job_type', 'job_lists.job_type_id', '=', 'job_type.job_type_id')
-        ->join('companies', 'job_lists.company_id', '=', 'companies.company_id')
-        ->select('job_id', 'job_type', 'job_title', 'job_description', 'company_name', 'company_description', 'company_location', 'company_website', 
+        $job = Job::join('companies', 'job_lists.company_id', '=', 'companies.company_id')
+        ->select('job_id', 'job_title', 'job_description', 'company_name', 'company_description', 'company_location', 'company_website', 
                 'salary_range', 'requirements')
         ->get();
         if ($job->isEmpty()) {
@@ -25,10 +24,8 @@ class JobController extends Controller
 
     public function getajob(string $id)
     {
-        $job = DB::table('job_lists')->where('job_id',$id)
-        ->join('job_type', 'job_lists.job_type_id', '=', 'job_type.job_type_id')
-        ->join('companies', 'job_lists.company_id', '=', 'companies.company_id')
-        ->select('job_id', 'job_type', 'job_title', 'job_description', 'company_name', 'company_description', 'company_location', 'company_website', 
+        $job = DB::table('job_lists')->where('job_id',$id)->join('companies', 'job_lists.company_id', '=', 'companies.company_id')
+        ->select('job_id', 'job_title', 'job_description', 'company_name', 'company_description', 'company_location', 'company_website', 
                 'salary_range', 'requirements')
         ->get();
         if ($job->isEmpty()) {
@@ -49,10 +46,28 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function searchjobs(Request $request)
     {
-        //
+        $jobs = Job::join('companies', 'job_lists.company_id', '=', 'companies.company_id')
+        ->where('job_title', 'like', '%'.$request->cariPekerjaan.'%')
+        ->where('company_location', 'like', '%'.$request->cariLokasi.'%')
+        ->select('job_title', 'company_name', 'company_location', 'job_description', 'salary_range', 'requirements')
+        ->get();
+        return view('homepage', [
+            "jobs"=>$jobs 
+        ]);
     }
+
+    public function viewjobs()
+    {
+        $jobs = Job::join('companies', 'job_lists.company_id', '=', 'companies.company_id')
+        ->select('job_title', 'company_name', 'company_location', 'job_description', 'salary_range', 'requirements')
+        ->get();
+        return view('homepage', [
+            "jobs"=>$jobs 
+        ]);
+    }
+
 
     /**
      * Display the specified resource.

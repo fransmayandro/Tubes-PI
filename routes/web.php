@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisUserController;
+use App\Http\Controllers\JobController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\AuthController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,37 +20,22 @@ use App\Http\Controllers\RegisUserController;
 */
 
 Route::get('/', function () {
-    return view('landing');
+    return redirect('/home');  
+});
+Route::get('/home',[JobController::class,'viewjobs'])->name('home');
+Route::get('/companypage',[CompanyController::class,'viewcompanies'])->name('companypage');
+Route::post('/searchjobs',[JobController::class,'searchjobs'])->name('search');
+Route::post('/searchcompanies',[CompanyController::class,'searchcompanies'])->name('search');
+
+Route::middleware(['guest'])->group(function(){
+    Route::get('/register',[AuthController::class,'register'])->name('register');
+    Route::post('/register',[AuthController::class,'registerPost'])->name('register');
+    Route::get('/login',[AuthController::class,'login'])->name('login');
+    Route::post('/login',[AuthController::class,'loginPost'])->name('login');
 });
 
-Route::get('/company', function () {
-    return view('company');
+Route::middleware('auth')->group(function(){
+    Route::post('/proses',[RegisUserController::class,'actionregister'])->name('proses');
+    Route::post('/storecompany',[CompanyController::class,'store'])->name('company.store');
+    Route::get('/createcompany',[CompanyController::class,'create'])->name('company.create');
 });
-
-Route::get('/job', function () {
-    return view('job');
-});
-
-Route::get('/test', function () {
-    return view('halo');
-});
-
-Route::get('/home', function () {
-    return view('home');
-});
-
-Route::get('/login', function () {
-    return view('login');
-});
-
-Route::get('/master', function () {
-    return view('master');
-});
-
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-Route::get('/register',[RegisUserController::class,'index'])->name('register');
-Route::post('/proses',[RegisUserController::class,'actionregister'])->name('proses');
-// $route['register'] = 'Register/index';
-// $route['register/process'] = 'Register/process';
