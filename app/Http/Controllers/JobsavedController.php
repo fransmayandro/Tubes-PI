@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Jobsaved;
 class JobsavedController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //function untuk API
     public function getjobsaved()
     {
         $jobsaved = Jobsaved::join('users', 'saved_jobs.user_id', '=', 'users.id')

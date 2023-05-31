@@ -33,9 +33,9 @@
                     <input type="password" name="password" class="form-control" placeholder="Password" required="">
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Daftar</button>
+                    <button type="submit" class="btn btn-block" style="background-color: #19A7CE">Daftar</button>
                 </div>
-                <p class="text-center">Sudah punya akun silahkan <a href="/login">Login Disini</a></p>
+                <p class="text-center">Sudah punya akun silahkan <a href="/login" style="color: #19A7CE">Login Disini</a></p>
             </form>
         </div>
     </div>

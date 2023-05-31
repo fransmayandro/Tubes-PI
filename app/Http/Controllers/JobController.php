@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Job;
 class JobController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //function untuk API
     public function getjob()
     {
         $job = Job::join('companies', 'job_lists.company_id', '=', 'companies.company_id')
@@ -43,11 +41,11 @@ class JobController extends Controller
         }
         return $job;
     }
-    /**
-     * Store a newly created resource in storage.
-     */
+
+    //function untuk website
     public function searchjobs(Request $request)
     {
+        $search = $request->query('search');
         $jobs = Job::join('companies', 'job_lists.company_id', '=', 'companies.company_id')
         ->where('job_title', 'like', '%'.$request->cariPekerjaan.'%')
         ->where('company_location', 'like', '%'.$request->cariLokasi.'%')
@@ -62,13 +60,34 @@ class JobController extends Controller
     {
         $jobs = Job::join('companies', 'job_lists.company_id', '=', 'companies.company_id')
         ->select('job_title', 'company_name', 'company_location', 'job_description', 'salary_range', 'requirements')
-        ->get();
+        ->Paginate(4);
         return view('homepage', [
             "jobs"=>$jobs 
         ]);
     }
 
+    public function searchsalary(Request $request)
+    {
+        $salary = Job::join('companies', 'job_lists.company_id', '=', 'companies.company_id')
+        ->where('job_title', 'like', '%'.$request->cariPekerjaan.'%')
+        ->where('salary_range', '>=',  $request->cariGajiMin)
+        ->where('salary_range', '<=',  $request->cariGajiMaks)
+        ->select('job_title', 'company_name', 'company_location', 'job_description', 'salary_range', 'requirements')
+        ->get();
+        return view('salarypage', [
+            "salary"=>$salary 
+        ]);
+    }
 
+    public function viewsalary()
+    {
+        $salary = Job::join('companies', 'job_lists.company_id', '=', 'companies.company_id')
+        ->select('job_title', 'company_name', 'company_location', 'job_description', 'salary_range', 'requirements')
+        ->Paginate(4);;
+        return view('salarypage', [
+            "salary"=>$salary 
+        ]);
+    }
     /**
      * Display the specified resource.
      */

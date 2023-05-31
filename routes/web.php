@@ -23,8 +23,10 @@ Route::get('/', function () {
     return redirect('/home');  
 });
 Route::get('/home',[JobController::class,'viewjobs'])->name('home');
+Route::get('/salarypage',[JobController::class,'viewsalary'])->name('salary');
 Route::get('/companypage',[CompanyController::class,'viewcompanies'])->name('companypage');
 Route::post('/searchjobs',[JobController::class,'searchjobs'])->name('search');
+Route::post('/searchsalary',[JobController::class,'searchsalary'])->name('salary.search');
 Route::post('/searchcompanies',[CompanyController::class,'searchcompanies'])->name('search');
 
 Route::middleware(['guest'])->group(function(){
@@ -38,4 +40,5 @@ Route::middleware('auth')->group(function(){
     Route::post('/proses',[RegisUserController::class,'actionregister'])->name('proses');
     Route::post('/storecompany',[CompanyController::class,'store'])->name('company.store');
     Route::get('/createcompany',[CompanyController::class,'create'])->name('company.create');
+    Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 });

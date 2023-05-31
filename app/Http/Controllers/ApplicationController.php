@@ -7,9 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Application;
 class ApplicationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    //function untuk API
     public function getapplication()
     {
         $application = Application::join('users', 'applications.user_id', "=", 'users.id')
@@ -29,7 +27,6 @@ class ApplicationController extends Controller
         ->join('job_lists', 'applications.job_id', '=', 'job_lists.job_id')
         ->select('application_id', 'name', 'email', 'job_title', 'job_description', 'resume_file', 'date_applied', 'status')
         ->get();
-        // dd ($application);
         if ($application->isEmpty()) {
             return response()->json(['message' => "Data tidak ditemukan"], 404);
         }

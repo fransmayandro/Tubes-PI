@@ -9,7 +9,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container" style="padding-top: 100px">
+    <div class="container" style="padding-top: 150px">
         <div class="col-md-4 col-md-offset-4">
             <h2 class="text-center"><b>JobStorage</b><br>Website Pencarian Kerja</h3>
             @if(Session::has('error'))
@@ -33,11 +33,22 @@
                         <small>{{ $message }}</small>
                     @enderror
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Masuk</button>
+                <button type="submit" class="btn btn-block" style="background-color: #19A7CE">Masuk</button>
                 <hr>
-                <p class="text-center">Belum punya akun? <a href="/register">Daftar</a> sekarang!</p>
+                <p class="text-center">Belum punya akun? <a href="/register" style="color: #19A7CE">Daftar</a> sekarang!</p>
             </form>
         </div>
     </div>
+    @if($message = Session::get('failed'))
+      <script>
+        Swal.fire('{{ $message }}');
+      </script>
+    @endif
+
+    @if($message = Session::get('success'))
+      <script>
+        Swal.fire('{{ $message }}');
+      </script>
+    @endif
 </body>
 </html>
